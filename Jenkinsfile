@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_IMAGE = "library-service-image"
+    }
+
+    // Various stages in the Pipeline Process:
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'master', url: 'https://github.com/SJeevani/library-service.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                // Build docker image using Dockerfile
+                bat "docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} -f Dockerfile ."
+            }
+        }
+
+        stage('K8s Deployment') {
+            steps {
+                script {
+                    withEnv(["KUBECONFIG=C:/Users/sabbi/.kube/config"]) {
+
+                        bat "kubectl apply -f namespace.yaml --validate=false"
+                        bat "kubectl apply -f deployment.yaml --validate=false"
+                        bat "kubectl apply -f service.yaml --validate=false"
+
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Checkout, Build, Dockerize & Deploy completed successfully!"
+        }
+        failure {
+            echo "❌ Build failed!"
+        }
+    }
+}
