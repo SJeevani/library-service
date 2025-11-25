@@ -4,7 +4,7 @@ metadata:
   name: library-service-deployment
   namespace: library-service-namespace
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: library-service
@@ -17,5 +17,12 @@ spec:
         - name: library-service-container
           image: library-service-image:latest
           imagePullPolicy: Never
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "256Mi"
+            limits:
+              cpu: "200m"
+              memory: "512Mi"
           ports:
             - containerPort: 8100
