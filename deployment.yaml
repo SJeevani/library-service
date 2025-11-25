@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: library-service-container
-          image: library-service-image:latest
+          image: library-service-image
           imagePullPolicy: Never
           resources:
             requests:
