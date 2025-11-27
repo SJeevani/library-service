@@ -25,9 +25,9 @@ pipeline {
                 script {
                     withEnv(["KUBECONFIG=C:/Users/sabbi/.kube/config"]) {
 
-                        bat "kubectl apply -f namespace.yaml --validate=false"
-                        bat "kubectl apply -f deployment.yaml --validate=false"
-                        bat "kubectl apply -f service.yaml --validate=false"
+                        bat "kubectl apply -f k8s/namespace.yaml --validate=false"
+                        bat "kubectl apply -f k8s/deployment.yaml --validate=false"
+                        bat "kubectl apply -f k8s/service.yaml --validate=false"
 
                     }
                 }
