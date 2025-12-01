@@ -28,13 +28,13 @@ public class BookController {
     }
 
     @GetMapping("findById")
-    public ResponseEntity<Book> findBookById(@RequestParam Long bookId){
+    public ResponseEntity<Book> findBookById(@RequestBody Long bookId){
         var book = bookService.findById(bookId);
         return new ResponseEntity<>(book.orElse(null),HttpStatus.OK);
     }
 
     @DeleteMapping("deleteById")
-    public ResponseEntity<Book> deleteBookById(@RequestParam Long bookId){
+    public ResponseEntity<Book> deleteBookById(@RequestBody Long bookId){
         bookService.deleteById(bookId);
         return  new ResponseEntity<>(HttpStatus.OK);
     }
